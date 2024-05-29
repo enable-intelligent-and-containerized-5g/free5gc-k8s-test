@@ -1,0 +1,12 @@
+resources:
+  - nrf
+  - amf
+  - ausf
+  - nssf
+  - pcf
+  - udm
+  - udr
+  - webui
+  - chf
+  - n3iwf
+  - n3iwue
