@@ -10,9 +10,3 @@ spec:
     - name: web
       port: 5000
       nodePort: 30500
-    # - name: web2122
-    #   port: 2122
-    #   nodePort: 30522
-    # - name: web2121
-    #   port: 2121
-    #   nodePort: 30521

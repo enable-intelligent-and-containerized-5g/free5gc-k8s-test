@@ -11,10 +11,10 @@ spec:
     metadata:
       labels:
         app: webui
-      # annotations:
-      #   k8s.v1.cni.cncf.io/networks: '[
-      #     { "name": "5gnetwork", "interface": "eth1", "ips": [ "129.97.168.120/24" ] }
-      #     ]'
+      annotations:
+        k8s.v1.cni.cncf.io/networks: '[
+          { "name": "5gnetwork", "interface": "eth1", "ips": [ "129.97.168.120/24" ] }
+          ]'
     spec:
       containers:
       - name: webui

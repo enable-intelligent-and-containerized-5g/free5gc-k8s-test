@@ -194,7 +194,7 @@ services:
       - db
       - free5gc-nrf
 
-  free5gc-chf: 
+  free5gc-chf: # ok
     container_name: chf
     image: free5gc/chf:v3.4.1
     command: ./chf -c ./config/chfcfg.yaml

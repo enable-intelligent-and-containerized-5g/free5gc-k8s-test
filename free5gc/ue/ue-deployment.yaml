@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ue
+  template:
+    metadata:
+      labels:
+        app: ue
+      annotations:
+        k8s.v1.cni.cncf.io/networks: '[
+          { "name": "n6network", "interface": "nran", "ips": [ "10.10.6.21/24" ] }
+          ]'
+    spec:
+      containers:
+      - name: ue
+        image: free5gc/ueransim:v3.4.1
+        imagePullPolicy: IfNotPresent
+        command: ["./nr-ue", "-c", "./config/uecfg.yaml"]
+        # command: ["/bin/sh", "-c", "chmod +xr ./config/ue-tools.sh && ./config/ue-tools.sh && ./nr-ue -c ./config/uecfg.yaml"]
+        volumeMounts:
+        - name: ue-volume
+          mountPath: /ueransim/config/
+        - name: tun-device
+          mountPath: /dev/net/tun
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+        resources:
+          requests:
+            cpu: 150m
+            memory: "100Mi"
+          limits:
+            cpu: 150m
+            memory: "150Mi"
+      volumes:
+      - name: ue-volume
+        configMap:
+          name: ue-configmap
+          items:
+          - key: uecfg.yaml
+            path: uecfg.yaml
+          - key: ue-tools.sh
+            path: ue-tools.sh
+            # mode: 0777
+      - name: tun-device
+        hostPath:
+          path: /dev/net/tun
+

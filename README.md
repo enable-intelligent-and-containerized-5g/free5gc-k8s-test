@@ -8,6 +8,7 @@ For more information about Free5GC, please visit the [Free5GC GitHub repository]
 ![Static Badge](https://img.shields.io/badge/free5gc-v3.4.1-green)
 ![Static Badge](https://img.shields.io/badge/ueransim-v3.4.1-green)
 ![Static Badge](https://img.shields.io/badge/k8s-v1.28.10-green)
+![Static Badge](https://img.shields.io/badge/ubuntu-v20.04_LTS-green) 
 ![Static Badge](https://img.shields.io/badge/kernel-v5.4.0-green) 
 
 ## (Opcional) Autocompletion and alias k for kubectl in Bash.

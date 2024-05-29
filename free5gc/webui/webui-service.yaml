@@ -10,9 +10,4 @@ spec:
     - name: http
       port: 5000
       nodePort: 30530
-    # - name: http1
-    #   port: 2121
-    #   nodePort: 30531
-    # - name: http2
-    #   port: 2122
-    #   nodePort: 30532
+      

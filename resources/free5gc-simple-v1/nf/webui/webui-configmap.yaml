@@ -19,7 +19,7 @@ data:
         port: 5000
       billingServer:
         enable: true
-        hostIPv4: webui-nwebui # 129.97.168.120 # webui
+        hostIPv4: webui-nwebui
         listenPort: 2122
         port: 2121
         tls:
