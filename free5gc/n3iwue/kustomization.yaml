@@ -1,0 +1,3 @@
+resources:
+- n3iwue-deployment.yaml
+- n3iwue-configmap.yaml
