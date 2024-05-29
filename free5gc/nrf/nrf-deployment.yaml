@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nrf
+  labels:
+    app: nrf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nrf
+  template:
+    metadata:
+      labels:
+        app: nrf
+    spec:
+      containers:
+      - name: nrf
+        image: free5gc/nrf:v3.4.1
+        imagePullPolicy: IfNotPresent
+        command: ["./nrf", "-c", "./config/nrfcfg.yaml"]
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+        - name: nrf-volume
+          mountPath: /free5gc/config/
+        env:
+        - name: DB_URI
+          value: "mongodb://db/free5gc"
+        - name: GIN_MODE
+          value: "release"
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      volumes:
+      - name: nrf-volume
+        projected:
+          sources:
+          - configMap:
+              name: nrf-configmap
+              

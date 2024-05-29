@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: amf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: amf
+  template:
+    metadata:
+      labels:
+        app: amf
+      annotations:
+        k8s.v1.cni.cncf.io/networks: '[
+          { "name": "n2network", "interface": "n3", "ips": [ "10.10.2.1/24" ] }
+          ]'
+    spec:
+      containers:
+      - name: amf
+        image: free5gc/amf:v3.4.1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: namf
+          containerPort: 8000
+        - name: n2
+          containerPort: 38412
+          protocol: SCTP
+        command: ["./amf", "-c", "./config/amfcfg.yaml"]
+        env:
+        - name: GIN_MODE
+          value: "release"
+        volumeMounts:
+        - name: amf-volume
+          mountPath: /free5gc/config/
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      volumes:
+      - name: amf-volume
+        projected:
+          sources:
+          - configMap:
+              name: amf-configmap

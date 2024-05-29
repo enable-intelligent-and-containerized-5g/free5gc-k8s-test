@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ue-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ue
+  template:
+    metadata:
+      labels:
+        app: ue
+    spec:
+      containers:
+      - name: ue
+        image: free5gc/ueransim:latest
+        imagePullPolicy: IfNotPresent
+        command: ["/bin/sh", "-c", "chmod +x ./config/ue-tools.sh && ./config/ue-tools.sh && ./nr-ue -c ./config/uecfg.yaml"]
+        volumeMounts:
+        - name: uecfg
+          mountPath: /ueransim/config/uecfg.yaml
+          subPath: uecfg.yaml
+        - name: ue-tools
+          mountPath: /ueransim/config/ue-tools.sh
+          subPath: ue-tools.sh
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+        resources:
+          requests:
+            cpu: 150m
+            memory: "100Mi"
+          limits:
+            cpu: 150m
+            memory: "150Mi"
+      volumes:
+      - name: uecfg
+        configMap:
+          name: uecfg-configmap
+      - name: ue-tools
+        configMap:
+          name: ue-tools-configmap

@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nssf-nnssf
+spec:
+  selector:
+    app: nssf
+  ports:
+    - port: 8000

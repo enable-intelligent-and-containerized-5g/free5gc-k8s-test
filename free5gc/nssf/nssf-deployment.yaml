@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nssf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nssf
+  template:
+    metadata:
+      labels:
+        app: nssf
+    spec:
+      containers:
+      - name: nssf
+        image: free5gc/nssf:v3.4.1
+        imagePullPolicy: IfNotPresent
+        command: ["./nssf", "-c", "./config/nssfcfg.yaml"]
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+        - name: nssf-volume
+          mountPath: /free5gc/config/
+        env:
+        - name: GIN_MODE
+          value: "release"
+      volumes:
+      - name: nssf-volume
+        projected:
+          sources:
+          - configMap:
+              name: nssf-configmap

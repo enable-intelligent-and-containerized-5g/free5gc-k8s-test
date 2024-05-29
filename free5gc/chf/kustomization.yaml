@@ -1,0 +1,4 @@
+resources:
+- chf-configmap.yaml
+- chf-deployment.yaml
+- chf-service.yaml

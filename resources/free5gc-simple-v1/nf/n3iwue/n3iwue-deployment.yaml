@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: n3iwue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: n3iwue
+  template:
+    metadata:
+      labels:
+        app: n3iwue
+      annotations:
+        k8s.v1.cni.cncf.io/networks: '[
+          { "name": "5gnetwork", "interface": "ethn3ue", "ips": [ "129.97.168.150/24" ] }
+          ]'
+    spec:
+      containers:
+      - name: n3iwue
+        image: free5gc/n3iwue:latest
+        imagePullPolicy: IfNotPresent
+        command: ["sleep", "infinity"]
+        volumeMounts:
+        - name: n3iwue-volume
+          mountPath: /n3iwue/config/n3ue.yaml
+          subPath: n3ue.yaml
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+        resources:
+          requests:
+            cpu: 150m
+            memory: "100Mi"
+          limits:
+            cpu: 150m
+            memory: "150Mi"
+      volumes:
+      - name: n3iwue-volume
+        configMap:
+          name: n3iwue-configmap

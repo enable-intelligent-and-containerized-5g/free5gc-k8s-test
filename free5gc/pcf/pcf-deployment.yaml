@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pcf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pcf
+  template:
+    metadata:
+      labels:
+        app: pcf
+    spec:
+      containers:
+      - name: pcf
+        image: free5gc/pcf:v3.4.1
+        imagePullPolicy: IfNotPresent
+        command: ["./pcf", "-c", "./config/pcfcfg.yaml"]
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+        - name: pcf-volume
+          mountPath: /free5gc/config
+        env:
+        - name: GIN_MODE
+          value: "release"
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      volumes:
+      - name: pcf-volume
+        projected:
+          sources:
+          - configMap:
+              name: pcf-configmap

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: udm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: udm
+  template:
+    metadata:
+      labels:
+        app: udm
+    spec:
+      containers:
+      - name: udm
+        image: free5gc/udm:v3.4.1
+        imagePullPolicy: IfNotPresent
+        command: ["./udm", "-c", "./config/udmcfg.yaml"]
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+        - name: udm-volume
+          mountPath: /free5gc/config/
+        env:
+        - name: GIN_MODE
+          value: "release"
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      volumes:
+      - name: udm-volume
+        projected:
+          sources:
+          - configMap:
+              name: udm-configmap

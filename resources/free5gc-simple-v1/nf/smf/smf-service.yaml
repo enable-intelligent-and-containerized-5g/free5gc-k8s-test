@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: smf-nsmf
+spec:
+  selector:
+    app: smf
+  ports:
+  - port: 8000
+    targetPort: 8000

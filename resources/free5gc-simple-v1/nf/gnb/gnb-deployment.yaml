@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ueransim
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ueransim
+  template:
+    metadata:
+      labels:
+        app: ueransim
+      annotations:
+        k8s.v1.cni.cncf.io/networks: '[
+          { "name": "5gnetwork", "interface": "ethgnb", "ips": [ "129.97.168.170/24" ] }
+          ]'
+    spec:
+      containers:
+      - name: ueransim
+        image: free5gc/ueransim:latest
+        imagePullPolicy: IfNotPresent
+        command: ["./nr-gnb", "-c", "./config/gnbcfg.yaml"]
+        volumeMounts:
+        - name: ueransim-volume
+          mountPath: /ueransim/config/gnbcfg.yaml
+          subPath: gnbcfg.yaml
+        - name: ueransim-volume
+          mountPath: /ueransim/config/uecfg.yaml
+          subPath: uecfg.yaml
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+        resources:
+          requests:
+            cpu: 150m
+            memory: "100Mi"
+          limits:
+            cpu: 150m
+            memory: "150Mi"
+      volumes:
+      - name: ueransim-volume
+        configMap:
+          name: ueransim-configmap
+          items:
+          - key: gnbcfg.yaml
+            path: gnbcfg.yaml
+          - key: uecfg.yaml
+            path: uecfg.yaml
+            mode: 0777

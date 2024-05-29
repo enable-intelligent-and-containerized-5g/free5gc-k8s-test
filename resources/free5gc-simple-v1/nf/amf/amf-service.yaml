@@ -1,0 +1,40 @@
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: amf-namf
+# spec:
+#   selector:
+#     app: amf
+#   ports:
+#     - name: namf
+#       port: 8000
+#       targetPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: amf-namf
+  labels:
+    project: free5gc
+    nf: amf
+spec:
+  ports:
+    - port: 8000
+  selector:
+    project: free5gc
+    nf: amf
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: amf-ngap
+#   labels:
+#     project: free5gc
+#     nf: amf
+# spec:
+#   ports:
+#     - port: 38412
+#       protocol: SCTP
+#   selector:
+#     project: free5gc
+#     nf: amf

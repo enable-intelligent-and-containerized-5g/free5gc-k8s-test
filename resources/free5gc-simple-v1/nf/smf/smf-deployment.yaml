@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: smf
+  template:
+    metadata:
+      labels:
+        app: smf
+      annotations:
+        k8s.v1.cni.cncf.io/networks: '[
+          { "name": "5gnetwork", "interface": "n4", "ips": [ "192.168.30.81/24" ] }
+          ]'
+    spec:
+      nodeName: nodo1
+      containers:
+      - name: smf
+        image: free5gc/smf:v3.4.1
+        imagePullPolicy: IfNotPresent 
+        command: ["./smf", "-c", "./config/smfcfg.yaml", "-u", "./config/uerouting.yaml"]
+        ports:
+        - name: nsmf
+          containerPort: 8000
+        - name: pfcp
+          containerPort: 8805
+          protocol: UDP
+        volumeMounts:
+        - name: smf-volume
+          mountPath: /free5gc/config/
+        env:
+        - name: GIN_MODE
+          value: "release"
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      volumes:
+      - name: smf-volume
+        configMap:
+          name: smf-configmap
+          items:
+          - key: smfcfg.yaml
+            path: smfcfg.yaml
+          - key: uerouting.yaml
+            path: uerouting.yaml

@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: upf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: upf
+  template:
+    metadata:
+      labels:
+        app: upf
+      annotations:
+        k8s.v1.cni.cncf.io/networks: '[
+          { "name": "n3network", "interface": "n3", "ips": [ "10.10.3.1/24" ] },
+          { "name": "n4network", "interface": "n4", "ips": [ "10.10.4.1/24" ] }
+          ]'
+    spec:
+      containers:
+      - name: upf
+        image: free5gc/upf:v3.4.1
+        imagePullPolicy: IfNotPresent
+        command: ["bash", "-c", "./upf-iptables.sh && ./upf -c ./config/upfcfg.yaml"]
+        volumeMounts:
+        - name: upf-volume
+          mountPath: /free5gc/config/upfcfg.yaml
+          subPath: upfcfg.yaml
+        - name: upf-volume
+          mountPath: /free5gc/upf-iptables.sh
+          subPath: upf-iptables.sh
+        ports:
+        - name: n4
+          containerPort: 8805
+          protocol: UDP
+        securityContext:
+          capabilities:
+            add: ["NET_ADMIN"]
+      restartPolicy: Always
+      volumes:
+      - name: upf-volume
+        configMap:
+          name: upf-configmap
+          items:
+          - key: upfcfg.yaml
+            path: upfcfg.yaml
+          - key: upf-iptables.sh
+            path: upf-iptables.sh
+            mode: 0777
+

@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ausf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ausf
+  template:
+    metadata:
+      labels:
+        app: ausf
+    spec:
+      containers:
+      - name: ausf
+        image: free5gc/ausf:v3.4.1
+        imagePullPolicy: IfNotPresent
+        command: ["./ausf", "-c", "./config/ausfcfg.yaml"]
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+        - name: ausf-volume
+          mountPath: /free5gc/config/
+        env:
+        - name: GIN_MODE
+          value: "release"
+      volumes:
+      - name: ausf-volume
+        projected:
+          sources:
+          - configMap:
+              name: ausf-configmap
+              
