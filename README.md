@@ -82,9 +82,53 @@ To deploy Free5GC and its components, follow the deployment steps below:
 
 **Note:** To unistall gtp5g run `sudo make uninstall`.
 
-8. Deploy Free5GC using the Kubernetes manifest files in the free5gc/ directory. The pods should eventually be in the Running state. You need deploy the NFs in a certain order. Use `kubectl apply -f <nf>/` command to deploy the NFs. The order is: upf, db, nrf, amf, ausf, nssf, pcf, smf, udm, udr. 
+8. Deploy Free5GC using the Kubernetes manifest files in the free5gc/ directory. The pods should eventually be in the Running state. You need deploy the NFs in a certain order. Use `kubectl apply -f <nf>/` command to deploy the NFs. The order is: upf, nrf, amf, ausf, nssf, pcf, smf, udm, udr, webui, chf, n3iwf, n3iwue. 
 
-    **FALTAN:** webui, chf, ue.
+9. The ueransim directory contains Kubernetes manifest files for both gNB and UEs. First, deploy UERANSIM gNB using ueransim/ueransim-gnb directory and wait for NGAP connection to succeed. You should see the following in the gNB log.
 
-9. 
+10. Ensure correct UE subscriber information is inserted. You can enter subscription information using the web UI. Subscribers can be added using the Free5GC WebUI. The WebUI is accessible at `http://<node-ip>:30530`. The default username and password are admin and free5gc, respectively. Subscriber details can be found in UE config files (e.g., ue1.yaml).
+
+11. Deploy UERANSIM UE using ueransim/ueransim-ue/ directory. Once the UE is connected, you should see the following logs:
+
+    ```sh
+    tesis@tesis-PC:~/tesis/5g-monarch2/free5gc-k8s-test/free5gc$ k logs ue-68979c6bd9-v9mbx 
+    UERANSIM v3.2.6
+    [2024-05-29 20:18:14.365] [nas] [info] UE switches to state [MM-DEREGISTERED/PLMN-SEARCH]
+    [2024-05-29 20:18:14.367] [rrc] [debug] New signal detected for cell[1], total [1] cells in coverage
+    [2024-05-29 20:18:14.372] [nas] [info] Selected plmn[208/93]
+    [2024-05-29 20:18:14.372] [rrc] [info] Selected cell plmn[208/93] tac[1] category[SUITABLE]
+    [2024-05-29 20:18:14.372] [nas] [info] UE switches to state [MM-DEREGISTERED/PS]
+    [2024-05-29 20:18:14.372] [nas] [info] UE switches to state [MM-DEREGISTERED/NORMAL-SERVICE]
+    [2024-05-29 20:18:14.372] [nas] [debug] Initial registration required due to [MM-DEREG-NORMAL-SERVICE]
+    [2024-05-29 20:18:14.372] [nas] [debug] UAC access attempt is allowed for identity[0], category[MO_sig]
+    [2024-05-29 20:18:14.372] [nas] [debug] Sending Initial Registration
+    [2024-05-29 20:18:14.373] [nas] [info] UE switches to state [MM-REGISTER-INITIATED]
+    [2024-05-29 20:18:14.373] [rrc] [debug] Sending RRC Setup Request
+    [2024-05-29 20:18:14.378] [rrc] [info] RRC connection established
+    [2024-05-29 20:18:14.378] [rrc] [info] UE switches to state [RRC-CONNECTED]
+    [2024-05-29 20:18:14.378] [nas] [info] UE switches to state [CM-CONNECTED]
+    [2024-05-29 20:18:14.757] [nas] [debug] Authentication Request received
+    [2024-05-29 20:18:14.757] [nas] [debug] Received SQN [000000000023]
+    [2024-05-29 20:18:14.757] [nas] [debug] SQN-MS [000000000000]
+    [2024-05-29 20:18:14.802] [nas] [debug] Security Mode Command received
+    [2024-05-29 20:18:14.802] [nas] [debug] Selected integrity[2] ciphering[0]
+    [2024-05-29 20:18:14.940] [nas] [debug] Registration accept received
+    [2024-05-29 20:18:14.940] [nas] [info] UE switches to state [MM-REGISTERED/NORMAL-SERVICE]
+    [2024-05-29 20:18:14.940] [nas] [debug] Sending Registration Complete
+    [2024-05-29 20:18:14.940] [nas] [info] Initial Registration is successful
+    [2024-05-29 20:18:14.940] [nas] [debug] Sending PDU Session Establishment Request
+    [2024-05-29 20:18:14.941] [nas] [debug] UAC access attempt is allowed for identity[0], category[MO_sig]
+    [2024-05-29 20:18:14.941] [nas] [debug] Sending PDU Session Establishment Request
+    [2024-05-29 20:18:14.941] [nas] [debug] UAC access attempt is allowed for identity[0], category[MO_sig]
+    [2024-05-29 20:18:15.147] [nas] [debug] Configuration Update Command received
+    [2024-05-29 20:18:15.552] [nas] [debug] PDU Session Establishment Accept received
+    [2024-05-29 20:18:15.552] [nas] [info] PDU Session establishment is successful PSI[1]
+    [2024-05-29 20:18:15.562] [nas] [debug] PDU Session Establishment Accept received
+    [2024-05-29 20:18:15.562] [nas] [info] PDU Session establishment is successful PSI[2]
+    [2024-05-29 20:18:15.657] [app] [info] Connection setup for PDU session[1] is successful, TUN interface[uesimtun0, 10.60.0.1] is up.
+    [2024-05-29 20:18:15.847] [app] [info] Connection setup for PDU session[2] is successful, TUN interface[uesimtun1, 10.61.0.1] is up.
+    ```
+
+
+
 

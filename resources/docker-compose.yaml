@@ -272,7 +272,7 @@ services:
       - free5gc-amf
       - free5gc-upf
 
-  ue:
+  ue: # ok
     container_name: ue
     image: free5gc/ueransim:v3.4.1
     command: 
