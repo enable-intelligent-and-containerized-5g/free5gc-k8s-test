@@ -58,6 +58,16 @@ To deploy Free5GC and its components, follow the deployment steps below:
 
 4. Deploy the MongoDB database using the Kubernetes manifest files provided in the mongodb/ directory. See deploying components. Wait for the db pod to be in the Running state before proceeding to the next step.
 
+5. Configuring bridges for use by ovs-cni.
+
+```sh
+sudo ovs-vsctl --may-exist add-br n2br
+sudo ovs-vsctl --may-exist add-br n3br
+sudo ovs-vsctl --may-exist add-br n4br
+sudo ovs-vsctl --may-exist add-br n5br
+sudo ovs-vsctl --may-exist add-br n6br
+```
+
 5. Deploy the network attachment definitions using manifest files in the networks5g/ directory. This are used for the secondary interfaces of the UPF, SMF, etc.
 
 6. Install the gtp5g kernel module for Free5GC. Install gtp5g v0.8.9 on nodes where UPF should run. This is a prerequisite for deploying the UPF.
