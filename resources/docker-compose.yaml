@@ -252,7 +252,7 @@ services:
     depends_on:
       - free5gc-n3iwf
 
-  ueransim:
+  ueransim: # ok
     container_name: ueransim
     image: free5gc/ueransim:v3.4.1
     command: ./nr-gnb -c ./config/gnbcfg.yaml

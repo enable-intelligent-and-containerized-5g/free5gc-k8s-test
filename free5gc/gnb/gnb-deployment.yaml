@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ueransim
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ueransim
+  template:
+    metadata:
+      labels:
+        app: ueransim
+      annotations:
+        k8s.v1.cni.cncf.io/networks: '[
+          { "name": "n2network", "interface": "n2", "ips": [ "10.10.2.20/24" ] },
+          { "name": "n3network", "interface": "n3", "ips": [ "10.10.3.20/24" ] },
+          { "name": "n6network", "interface": "nran", "ips": [ "10.10.6.20/24" ] }
+          ]'
+    spec:
+      containers:
+      - name: ueransim
+        image: free5gc/ueransim:v3.4.1
+        imagePullPolicy: IfNotPresent
+        command: ["./nr-gnb", "-c", "./config/gnbcfg.yaml"]
+        volumeMounts:
+        - name: ueransim-volume
+          mountPath: /ueransim/config/gnbcfg.yaml
+          subPath: gnbcfg.yaml
+        - name: ueransim-volume
+          mountPath: /ueransim/config/uecfg.yaml
+          subPath: uecfg.yaml
+        - name: tun-device
+          mountPath: /dev/net/tun
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+        resources:
+          requests:
+            cpu: 150m
+            memory: "100Mi"
+          limits:
+            cpu: 150m
+            memory: "150Mi"
+      volumes:
+      - name: ueransim-volume
+        configMap:
+          name: ueransim-configmap
+          items:
+          - key: gnbcfg.yaml
+            path: gnbcfg.yaml
+          - key: uecfg.yaml
+            path: uecfg.yaml
+            mode: 0777
+      - name: tun-device
+        hostPath:
+          path: /dev/net/tun

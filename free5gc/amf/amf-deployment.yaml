@@ -13,7 +13,7 @@ spec:
         app: amf
       annotations:
         k8s.v1.cni.cncf.io/networks: '[
-          { "name": "n2network", "interface": "n3", "ips": [ "10.10.2.1/24" ] }
+          { "name": "n2network", "interface": "n2", "ips": [ "10.10.2.1/24" ] }
           ]'
     spec:
       containers:

@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: n3iwue
-        image: free5gc/n3iwue:latest
+        image: free5gc/n3iwue:v3.4.1
         imagePullPolicy: IfNotPresent
         command: ["sleep", "infinity"]
         volumeMounts:
