@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: Pod
-metadata:
-  name: pod1
-spec:
-  containers:
-  - name: cont1
-    image: mongo
-  podIP: 192.168.1.100  # Aquí especifica la dirección IP estática deseada
