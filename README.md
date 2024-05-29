@@ -60,20 +60,20 @@ To deploy Free5GC and its components, follow the deployment steps below:
 
 5. Configuring bridges for use by ovs-cni.
 
-```sh
-sudo ovs-vsctl --may-exist add-br n2br
-sudo ovs-vsctl --may-exist add-br n3br
-sudo ovs-vsctl --may-exist add-br n4br
-sudo ovs-vsctl --may-exist add-br n5br
-sudo ovs-vsctl --may-exist add-br n6br
-```
+    ```sh
+    sudo ovs-vsctl --may-exist add-br n2br
+    sudo ovs-vsctl --may-exist add-br n3br
+    sudo ovs-vsctl --may-exist add-br n4br
+    sudo ovs-vsctl --may-exist add-br n5br
+    sudo ovs-vsctl --may-exist add-br n6br
+    ```
 
-5. Deploy the network attachment definitions using manifest files in the networks5g/ directory. This are used for the secondary interfaces of the UPF, SMF, etc.
+6. Deploy the network attachment definitions using manifest files in the networks5g/ directory. This are used for the secondary interfaces of the UPF, SMF, etc.
 
-6. Install the gtp5g kernel module for Free5GC. Install gtp5g v0.8.9 on nodes where UPF should run. This is a prerequisite for deploying the UPF.
+7. Install the gtp5g kernel module for Free5GC. Install gtp5g v0.8.9 on nodes where UPF should run. This is a prerequisite for deploying the UPF.
 
     ```sh
-    git clone https://github.com/free5gc/gtp5g/releases/tag/v0.8.9 gtp5g
+    git clone -b v0.8.9 https://github.com/free5gc/gtp5g.git
     cd gtp5g
     make clean && make
     sudo make install
@@ -81,9 +81,9 @@ sudo ovs-vsctl --may-exist add-br n6br
 
 **Note:** To unistall gtp5g run `sudo make uninstall`.
 
-7. Deploy Free5GC using the Kubernetes manifest files in the free5gc/ directory. The pods should eventually be in the Running state. You need deploy the NFs in a certain order. Use `kubectl apply -f <nf>/` command to deploy the NFs. The order is: upf, db, nrf, amf, ausf, nssf, pcf, smf, udm, udr. 
+8. Deploy Free5GC using the Kubernetes manifest files in the free5gc/ directory. The pods should eventually be in the Running state. You need deploy the NFs in a certain order. Use `kubectl apply -f <nf>/` command to deploy the NFs. The order is: upf, db, nrf, amf, ausf, nssf, pcf, smf, udm, udr. 
 
-    **FALTAN:** webui, chf, n3iwf, n3iwue.
+    **FALTAN:** webui, chf, ue.
 
-8. 
+9. 
 
