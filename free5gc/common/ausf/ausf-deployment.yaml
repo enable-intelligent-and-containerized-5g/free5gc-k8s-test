@@ -12,6 +12,13 @@ spec:
       labels:
         app: ausf
     spec:
+      initContainers:
+      - name: wait-amf
+        image: busybox:1.32.0
+        env:
+        - name: DEPENDENCIES
+          value: amf-namf:8000
+        command: ["sh", "-c", "until nc -z $DEPENDENCIES; do echo waiting for the AMF; sleep 2; done;"]
       containers:
       - name: ausf
         image: free5gc/ausf:v3.4.1

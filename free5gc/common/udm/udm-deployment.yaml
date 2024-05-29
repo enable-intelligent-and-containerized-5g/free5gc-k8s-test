@@ -12,6 +12,13 @@ spec:
       labels:
         app: udm
     spec:
+      initContainers:
+      - name: wait-pcf
+        image: busybox:1.32.0
+        env:
+        - name: DEPENDENCIES
+          value: pcf-npcf:8000
+        command: ["sh", "-c", "until nc -z $DEPENDENCIES; do echo waiting for the PCF; sleep 2; done;"]
       containers:
       - name: udm
         image: free5gc/udm:v3.4.1

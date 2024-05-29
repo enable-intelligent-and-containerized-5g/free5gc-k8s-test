@@ -17,6 +17,13 @@ spec:
           { "name": "n4network", "interface": "n4", "ips": [ "10.10.4.1/24" ] }
           ]'
     spec:
+      initContainers:
+      - name: wait-nrf
+        image: busybox:1.32.0
+        env:
+        - name: DEPENDENCIES
+          value: nrf-nnrf:8000
+        command: ["sh", "-c", "until nc -z $DEPENDENCIES; do echo waiting for the NRF; sleep 2; done;"]
       containers:
       - name: upf
         image: free5gc/upf:v3.4.1

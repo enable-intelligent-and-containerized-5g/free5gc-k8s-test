@@ -14,6 +14,13 @@ spec:
       labels:
         app: nrf
     spec:
+      initContainers:
+      - name: wait-mongo
+        image: busybox:1.32.0
+        env:
+        - name: DEPENDENCIES
+          value: mongodb:27017
+        command: ["sh", "-c", "until nc -z $DEPENDENCIES; do echo waiting for the MongoDB; sleep 2; done;"]
       containers:
       - name: nrf
         image: free5gc/nrf:v3.4.1

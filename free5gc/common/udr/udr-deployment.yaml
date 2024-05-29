@@ -13,6 +13,13 @@ spec:
       labels:
         app: udr
     spec:
+      initContainers:
+      - name: wait-udm
+        image: busybox:1.32.0
+        env:
+        - name: DEPENDENCIES
+          value: udm-nudm:8000
+        command: ["sh", "-c", "until nc -z $DEPENDENCIES; do echo waiting for the SMF; sleep 2; done;"]
       containers:
       - name: udr
         image: free5gc/udr:v3.4.1

@@ -12,6 +12,13 @@ spec:
       labels:
         app: nssf
     spec:
+      initContainers:
+        - name: wait-udr
+          image: busybox:1.32.0
+          env:
+          - name: DEPENDENCIES
+            value: udr-nudr:8000
+          command: ["sh", "-c", "until nc -z $DEPENDENCIES; do echo waiting for the UDR; sleep 2; done;"]
       containers:
       - name: nssf
         image: free5gc/nssf:v3.4.1

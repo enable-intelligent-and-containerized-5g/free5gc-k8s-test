@@ -16,6 +16,13 @@ spec:
           { "name": "n3network", "interface": "chf", "ips": [ "10.10.3.6/24" ] }
           ]'
     spec:
+      initContainers:
+      - name: wait-udm
+        image: busybox:1.32.0
+        env:
+        - name: DEPENDENCIES
+          value: webui-service:5000
+        command: ["sh", "-c", "until nc -z $DEPENDENCIES; do echo waiting for the WEBUI; sleep 2; done;"]
       containers:
       - name: chf
         image: free5gc/chf:v3.4.1

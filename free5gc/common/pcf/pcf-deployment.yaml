@@ -12,6 +12,13 @@ spec:
       labels:
         app: pcf
     spec:
+      initContainers:
+      - name: wait-smf
+        image: busybox:1.32.0
+        env:
+        - name: DEPENDENCIES
+          value: smf-nsmf:8000
+        command: ["sh", "-c", "until nc -z $DEPENDENCIES; do echo waiting for the SMF; sleep 2; done;"]
       containers:
       - name: pcf
         image: free5gc/pcf:v3.4.1
