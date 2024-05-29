@@ -11,11 +11,9 @@ For more information about Free5GC, please visit the [Free5GC GitHub repository]
 ![Static Badge](https://img.shields.io/badge/ubuntu-v20.04_LTS-green) 
 ![Static Badge](https://img.shields.io/badge/kernel-v5.4.0-green) 
 
-## (Opcional) Autocompletion and alias k for kubectl in Bash.
+## (Opcional) Autocompletion to k alias in Bash.
 
 ```sh
-# Enable command completion for kubectl in Bash.
-echo 'source <(kubectl completion bash)' >>~/.bashrc
 # Create an alias k that you can use instead of typing kubectl each time.
 echo 'alias k=kubectl' >>~/.bashrc
 # Set up command completion for the alias k using the same completion function as kubectl.
@@ -71,16 +69,19 @@ To deploy Free5GC and its components, follow the deployment steps below:
 
 6. Deploy the network attachment definitions using manifest files in the networks5g/ directory. This are used for the secondary interfaces of the UPF, SMF, etc.
 
-7. Install the gtp5g kernel module for Free5GC. Install gtp5g v0.8.9 on nodes where UPF should run. This is a prerequisite for deploying the UPF.
+7. Install the gtp5g kernel module for Free5GC.
 
     ```sh
-    git clone -b v0.8.9 https://github.com/free5gc/gtp5g.git
-    cd gtp5g
-    make clean && make
-    sudo make install
+    cd bin
+    ./install-gtp5g.sh
     ```
 
-**Note:** To unistall gtp5g run `sudo make uninstall`.
+    To unistall gtp5g:
+    
+    ```sh
+    cd build/gtp5g
+    sudo make uninstall
+    ```
 
 8. Deploy Free5GC using the Kubernetes manifest files in the free5gc/ directory. The pods should eventually be in the Running state. You need deploy the NFs in a certain order. Use `kubectl apply -f <nf>/` command to deploy the NFs. The order is: upf, nrf, amf, ausf, nssf, pcf, smf, udm, udr, webui, chf, n3iwf, n3iwue. 
 
