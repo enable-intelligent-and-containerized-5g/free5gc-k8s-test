@@ -194,7 +194,7 @@ services:
       - db
       - free5gc-nrf
 
-  free5gc-chf: # 
+  free5gc-chf: 
     container_name: chf
     image: free5gc/chf:v3.4.1
     command: ./chf -c ./config/chfcfg.yaml
@@ -214,7 +214,7 @@ services:
       - free5gc-nrf
       - free5gc-webui
 
-  free5gc-n3iwf:
+  free5gc-n3iwf: # 
     container_name: n3iwf
     image: free5gc/n3iwf:v3.4.1
     command: sh -c "./n3iwf-ipsec.sh && ./n3iwf -c ./config/n3iwfcfg.yaml"

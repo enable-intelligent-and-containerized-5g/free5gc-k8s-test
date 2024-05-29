@@ -1,0 +1,4 @@
+resources:
+- n3iwf-deployment.yaml
+- n3iwf-service.yaml
+- n3iwf-configmap.yaml

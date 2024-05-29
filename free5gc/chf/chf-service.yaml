@@ -3,7 +3,13 @@ kind: Service
 metadata:
   name: chf-nchf
 spec:
+  type: NodePort
   selector:
     app: chf
   ports:
-  - port: 8000
+  - name: chf
+    port: 8000
+  - name: chf1
+    port: 2121
+  - name: chf2
+    port: 2122

@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: n3iwf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: n3iwf
+  template:
+    metadata:
+      labels:
+        app: n3iwf
+      annotations:
+        k8s.v1.cni.cncf.io/networks: '[
+          { "name": "n2network", "interface": "n2", "ips": [ "10.10.2.15/24" ] },
+          { "name": "n3network", "interface": "n3", "ips": [ "10.10.3.15/24" ] },
+          { "name": "n5network", "interface": "nwu", "ips": [ "10.10.5.15/24" ] }
+          ]'
+    spec:
+      containers:
+      - name: n3iwf
+        image: free5gc/n3iwf:v3.4.1
+        imagePullPolicy: IfNotPresent
+        command: ["sh", "-c", "./n3iwf-ipsec.sh && ./n3iwf -c ./config/n3iwfcfg.yaml"]
+        # command: ["/bin/sh", "-c", "./n3iwf-ipsec.sh && ./n3iwf -c /free5gc/config/n3iwfcfg.yaml"]
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+        - name: n3iwf-volume
+          mountPath: /free5gc/config/n3iwfcfg.yaml
+          subPath: n3iwfcfg.yaml
+        - name: n3iwf-volume
+          mountPath: /free5gc/n3iwf-ipsec.sh
+          subPath: n3iwf-ipsec.sh
+        env:
+        - name: GIN_MODE
+          value: "release"
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+      volumes:
+      - name: n3iwf-volume
+        configMap:
+          name: n3iwf-configmap
+          items:
+          - key: n3iwfcfg.yaml
+            path: n3iwfcfg.yaml
+          - key: n3iwf-ipsec.sh
+            path: n3iwf-ipsec.sh
+            mode: 0777

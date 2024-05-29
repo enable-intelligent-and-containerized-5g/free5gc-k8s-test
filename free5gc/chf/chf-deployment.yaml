@@ -11,10 +11,10 @@ spec:
     metadata:
       labels:
         app: chf
-      annotations:
-        k8s.v1.cni.cncf.io/networks: '[
-          { "name": "n3network", "interface": "chf", "ips": [ "10.10.3.6/24" ] }
-          ]'
+      # annotations:
+      #   k8s.v1.cni.cncf.io/networks: '[
+      #     { "name": "n3network", "interface": "chf", "ips": [ "10.10.3.6/24" ] }
+      #     ]'
     spec:
       containers:
       - name: chf
@@ -23,8 +23,8 @@ spec:
         command: ["./chf", "-c", "./config/chfcfg.yaml"]
         ports:
         - containerPort: 8000
-        - containerPort: 3868
-        - containerPort: 3869
+        # - containerPort: 3868
+        # - containerPort: 3869
         - containerPort: 2121
         - containerPort: 2122
         volumeMounts:

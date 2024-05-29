@@ -19,7 +19,7 @@ data:
         port: 5000
       billingServer:
         enable: true
-        hostIPv4: 0.0.0.0
+        hostIPv4: 10.10.3.5
         listenPort: 2122
         port: 2121
         tls:
