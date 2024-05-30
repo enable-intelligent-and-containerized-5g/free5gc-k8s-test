@@ -19,12 +19,12 @@ spec:
           ]'
     spec:
       initContainers:
-      - name: wait-udm
+      - name: wait-chf
         image: busybox:1.32.0
         env:
         - name: DEPENDENCIES
-          value: webui-service:5000
-        command: ["sh", "-c", "until nc -z $DEPENDENCIES; do echo waiting for the WEBUI; sleep 2; done;"]
+          value: chf-nchf:8000
+        command: ["sh", "-c", "until nc -z $DEPENDENCIES; do echo waiting for the CHF; sleep 2; done;"]
       containers:
       - name: n3iwf
         image: free5gc/n3iwf:v3.4.1

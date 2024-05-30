@@ -17,7 +17,7 @@ spec:
           ]'
     spec:
       initContainers:
-      - name: wait-udm
+      - name: wait-webui
         image: busybox:1.32.0
         env:
         - name: DEPENDENCIES
