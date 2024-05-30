@@ -26,12 +26,12 @@ spec:
       containers:
       - name: chf
         image: free5gc/chf:v3.4.1
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         command: ["./chf", "-c", "./config/chfcfg.yaml"]
         ports:
         - containerPort: 8000
-        # - containerPort: 3868
-        # - containerPort: 3869
+        - containerPort: 3868
+        - containerPort: 3869
         - containerPort: 2121
         - containerPort: 2122
         volumeMounts:

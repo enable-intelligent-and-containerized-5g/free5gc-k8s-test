@@ -11,7 +11,7 @@ data:
     pfcp:
       addr: 10.10.4.1  # IP addr for listening
       nodeID: 10.10.4.1 # External IP or FQDN can be reached
-      retransTimeout: 1s # retransmission timeout
+      retransTimeout: 2s # retransmission timeout
       maxRetrans: 3 # the max number of retransmission
 
     gtpu:

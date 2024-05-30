@@ -22,7 +22,7 @@ spec:
       containers:
       - name: udm
         image: free5gc/udm:v3.4.1
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         command: ["./udm", "-c", "./config/udmcfg.yaml"]
         ports:
         - containerPort: 8000

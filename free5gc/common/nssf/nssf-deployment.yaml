@@ -22,7 +22,7 @@ spec:
       containers:
       - name: nssf
         image: free5gc/nssf:v3.4.1
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         command: ["./nssf", "-c", "./config/nssfcfg.yaml"]
         ports:
         - containerPort: 8000

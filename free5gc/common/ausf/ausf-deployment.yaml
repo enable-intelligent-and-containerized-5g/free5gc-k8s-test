@@ -22,7 +22,7 @@ spec:
       containers:
       - name: ausf
         image: free5gc/ausf:v3.4.1
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         command: ["./ausf", "-c", "./config/ausfcfg.yaml"]
         ports:
         - containerPort: 8000

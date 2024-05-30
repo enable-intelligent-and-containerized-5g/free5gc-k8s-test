@@ -26,6 +26,7 @@ spec:
       containers:
       - name: webui
         image: free5gc/webui:v3.4.1
+        imagePullPolicy: Always
         command: ["./webui", "-c", "./config/webuicfg.yaml"]
         ports:
         - containerPort: 5000

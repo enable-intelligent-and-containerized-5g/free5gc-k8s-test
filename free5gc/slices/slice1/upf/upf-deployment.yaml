@@ -27,7 +27,7 @@ spec:
       containers:
       - name: upf
         image: free5gc/upf:v3.4.1
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         command: ["bash", "-c", "./upf-iptables.sh && ./upf -c ./config/upfcfg.yaml"]
         volumeMounts:
         - name: upf-volume

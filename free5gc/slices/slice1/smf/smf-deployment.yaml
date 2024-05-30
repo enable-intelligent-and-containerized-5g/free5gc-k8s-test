@@ -26,7 +26,7 @@ spec:
       containers:
       - name: smf
         image: free5gc/smf:v3.4.1
-        imagePullPolicy: IfNotPresent 
+        imagePullPolicy: Always
         command: ["./smf", "-c", "./config/smfcfg.yaml", "-u", "./config/uerouting.yaml"]
         ports:
         - name: nsmf

@@ -23,7 +23,7 @@ spec:
       containers:
       - name: udr
         image: free5gc/udr:v3.4.1
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         command: ["./udr", "-c", "./config/udrcfg.yaml"]
         ports:
         - containerPort: 8000

@@ -13,15 +13,16 @@ spec:
         app: ue
       annotations:
         k8s.v1.cni.cncf.io/networks: '[
-          { "name": "n6network", "interface": "nran", "ips": [ "10.10.6.22/24" ] }
+          { "name": "n6network", "interface": "nran", "ips": [ "10.10.6.19/24" ] },
+          { "name": "n2network", "interface": "n1", "ips": [ "10.10.2.19/24" ] }
           ]'
     spec:
       containers:
       - name: ue
-        image: free5gc/ueransim:v3.4.1
-        imagePullPolicy: IfNotPresent
+        image: free5gc/ueransim:v3.4.1 # latest
+        imagePullPolicy: Always
         command: ["./nr-ue", "-c", "./config/uecfg.yaml"]
-        # command: ["/bin/sh", "-c", "chmod +xr ./config/ue-tools.sh && ./config/ue-tools.sh && ./nr-ue -c ./config/uecfg.yaml"]
+        # command: ["/bin/sh", "-c", "./config/ue-tools.sh && ./nr-ue -c ./config/uecfg.yaml"]
         volumeMounts:
         - name: ue-volume
           mountPath: /ueransim/config/
@@ -47,7 +48,7 @@ spec:
             path: uecfg.yaml
           - key: ue-tools.sh
             path: ue-tools.sh
-            # mode: 0777
+            mode: 0777
       - name: tun-device
         hostPath:
           path: /dev/net/tun

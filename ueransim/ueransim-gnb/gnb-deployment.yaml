@@ -20,8 +20,8 @@ spec:
     spec:
       containers:
       - name: ueransim
-        image: free5gc/ueransim:v3.4.1
-        imagePullPolicy: IfNotPresent
+        image: free5gc/ueransim:v3.4.1 # latest
+        imagePullPolicy: Always
         command: ["./nr-gnb", "-c", "./config/gnbcfg.yaml"]
         volumeMounts:
         - name: ueransim-volume

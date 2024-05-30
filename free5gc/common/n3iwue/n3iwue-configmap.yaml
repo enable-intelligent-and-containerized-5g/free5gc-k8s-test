@@ -18,7 +18,7 @@ data:
                     MNC: 93 # Mobile Network Code (2 or 3 digits string, digit: 0~9)
                 MSIN: 0000001234 # Mobile Subscriber Identification Number (max 9 or 10 digits string, digit: 0~9)
             AMFID: cafe00 # For AMF identifier of GUAMI in AP-Parameter (hex string, 3 octets)
-            IPSecIfaceName: nwu # eth0 # Name of Nwu interface (IKE) on this N3UE
+            IPSecIfaceName: nwu # Name of Nwu interface (IKE) on this N3UE
             IPSecIfaceAddr: 10.10.5.20 # n3ue.free5gc.org # IP address of Nwu interface (IKE) on this N3UE
             DnIPAddr: # IP address of domain network on this N3UE
             XfrmiId: 1 # Default XFRM interface if_id for routing, if_id of additional xfrmi will accumulate

@@ -28,7 +28,7 @@ spec:
       containers:
       - name: n3iwf
         image: free5gc/n3iwf:v3.4.1
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         command: ["sh", "-c", "./n3iwf-ipsec.sh && ./n3iwf -c ./config/n3iwfcfg.yaml"]
         ports:
         - containerPort: 8000

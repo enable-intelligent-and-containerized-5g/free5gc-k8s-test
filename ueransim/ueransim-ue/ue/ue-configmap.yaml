@@ -84,6 +84,7 @@ data:
       uplink: "full"
       downlink: "full"
 
+
   ue-tools.sh: |
     #!/bin/bash
     #

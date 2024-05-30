@@ -29,8 +29,8 @@ spec:
       #   command: ['sh', '-c', 'until curl -s -o /dev/null -w "%{http_code}" http://n3iwf-nn3iwf:8000 | grep "200"; do sleep 1; done;']
       containers:
       - name: n3iwue
-        image: free5gc/n3iwue:v3.4.1
-        imagePullPolicy: IfNotPresent
+        image: free5gc/n3iwue:v3.4.1 # latest
+        imagePullPolicy: Always
         command: ["sleep", "infinity"]
         volumeMounts:
         - name: n3iwue-volume

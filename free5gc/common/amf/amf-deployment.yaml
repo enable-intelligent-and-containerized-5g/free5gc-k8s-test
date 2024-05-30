@@ -13,7 +13,7 @@ spec:
         app: amf
       annotations:
         k8s.v1.cni.cncf.io/networks: '[
-          { "name": "n2network", "interface": "n2", "ips": [ "10.10.2.1/24" ] }
+          { "name": "n2network", "interface": "n3", "ips": [ "10.10.2.1/24" ] }
           ]'
     spec:
       initContainers:
@@ -23,7 +23,7 @@ spec:
       containers:
       - name: amf
         image: free5gc/amf:v3.4.1
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - name: namf
           containerPort: 8000
