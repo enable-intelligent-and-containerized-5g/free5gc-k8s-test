@@ -6,11 +6,10 @@ metadata:
   labels:
     app.kubernetes.io/name: mongodb
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - name: mongodb
       port: 27017
-      targetPort: mongodb
-      nodePort: null
+      nodePort: 30000
   selector:
     app.kubernetes.io/name: mongodb
