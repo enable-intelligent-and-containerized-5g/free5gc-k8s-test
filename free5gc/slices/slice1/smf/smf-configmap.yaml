@@ -13,7 +13,7 @@ data:
       sbi: # Service-based interface information
         scheme: http # the protocol for sbi (http or https)
         registerIPv4: smf-nsmf # smf.free5gc.org # IP used to register to NRF
-        bindingIPv4: 0.0.0.0 # smf.free5gc.org # IP used to bind the service
+        bindingIPv4: 0.0.0.0 # IP used to bind the service
         port: 8000 # Port used to bind the service
         tls: # the local path of TLS key
           key: cert/smf.key # SMF TLS Certificate
@@ -45,17 +45,17 @@ data:
       locality: area1 # Name of the location where a set of AMF, SMF, PCF and UPFs are located
       pfcp: # the IP address of N4 interface on this SMF (PFCP)
         # addr config is deprecated in smf config v1.0.3, please use the following config
-        nodeID: 10.10.4.101 # smf.free5gc.org # the Node ID of this SMF
-        listenAddr: 10.10.4.101 # smf.free5gc.org # the IP/FQDN of N4 interface on this SMF (PFCP)
-        externalAddr: 10.10.4.101 # smf.free5gc.org # the IP/FQDN of N4 interface on this SMF (PFCP)
+        nodeID: 10.10.4.101 # the Node ID of this SMF
+        listenAddr: 10.10.4.101 # the IP/FQDN of N4 interface on this SMF (PFCP)
+        externalAddr: 10.10.4.101 # the IP/FQDN of N4 interface on this SMF (PFCP)
       userplaneInformation: # list of userplane information
         upNodes: # information of userplane node (AN or UPF)
           gNB1: # the name of the node
             type: AN # the type of the node (AN or UPF)
           UPF: # the name of the node
             type: UPF # the type of the node (AN or UPF)
-            nodeID: 10.10.4.1 # upf.free5gc.org # the Node ID of this UPF
-            addr: 10.10.4.1 # upf.free5gc.org # the IP/FQDN of N4 interface on this UPF (PFCP)
+            nodeID: 10.10.4.1 # the Node ID of this UPF
+            addr: 10.10.4.1 # the IP/FQDN of N4 interface on this UPF (PFCP)
             sNssaiUpfInfos: # S-NSSAI information list for this UPF
               - sNssai: # S-NSSAI (Single Network Slice Selection Assistance Information)
                   sst: 1 # Slice/Service Type (uinteger, range: 0~255)
@@ -104,7 +104,8 @@ data:
       level: info # how detailed to output, value: trace, debug, info, warn, error, fatal, panic
       reportCaller: false # enable the caller report or not, value: true or false
 
-  uerouting.yaml: |-
+
+  uerouting.yaml: |
     info:
       version: 1.0.7
       description: Routing information for UE
@@ -152,4 +153,5 @@ data:
           - pfdID: pfd1 # PFD identifier
             flowDescriptions: # Represents a 3-tuple with protocol, server ip and server port for UL/DL application traffic
               - permit out ip from 10.60.0.1 8080 to any
+
 

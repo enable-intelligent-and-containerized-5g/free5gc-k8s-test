@@ -13,8 +13,7 @@ spec:
         app: ue
       annotations:
         k8s.v1.cni.cncf.io/networks: '[
-          { "name": "n6network", "interface": "nran", "ips": [ "10.10.6.19/24" ] },
-          { "name": "n2network", "interface": "n1", "ips": [ "10.10.2.19/24" ] }
+          { "name": "n6network", "interface": "nran", "ips": [ "10.10.6.19/24" ] }
           ]'
     spec:
       containers:

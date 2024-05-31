@@ -27,22 +27,22 @@ spec:
         - name: ueransim-volume
           mountPath: /ueransim/config/gnbcfg.yaml
           subPath: gnbcfg.yaml
-        - name: ueransim-volume
-          mountPath: /ueransim/config/uecfg.yaml
-          subPath: uecfg.yaml
+        # - name: ueransim-volume
+        #   mountPath: /ueransim/config/uecfg.yaml
+        #   subPath: uecfg.yaml
         - name: tun-device
           mountPath: /dev/net/tun
         securityContext:
           capabilities:
             add:
             - NET_ADMIN
-        resources:
-          requests:
-            cpu: 150m
-            memory: "100Mi"
-          limits:
-            cpu: 150m
-            memory: "150Mi"
+        # resources:
+        #   requests:
+        #     cpu: 150m
+        #     memory: "100Mi"
+        #   limits:
+        #     cpu: 150m
+        #     memory: "150Mi"
       volumes:
       - name: ueransim-volume
         configMap:
@@ -50,9 +50,9 @@ spec:
           items:
           - key: gnbcfg.yaml
             path: gnbcfg.yaml
-          - key: uecfg.yaml
-            path: uecfg.yaml
-            mode: 0777
+          # - key: uecfg.yaml
+          #   path: uecfg.yaml
+          #   mode: 0777
       - name: tun-device
         hostPath:
           path: /dev/net/tun
